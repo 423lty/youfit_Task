@@ -44,8 +44,9 @@
             this.repeat = new System.Windows.Forms.Button();
             this.File = new System.Windows.Forms.GroupBox();
             this.musicTimer = new System.Windows.Forms.Timer(this.components);
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.AudioProgressBar = new System.Windows.Forms.ProgressBar();
             this.playbackTime = new System.Windows.Forms.GroupBox();
+            this.PlaybackTimeLabel = new System.Windows.Forms.Label();
             this.File.SuspendLayout();
             this.playbackTime.SuspendLayout();
             this.SuspendLayout();
@@ -169,7 +170,7 @@
             this.File.Margin = new System.Windows.Forms.Padding(2);
             this.File.Name = "File";
             this.File.Padding = new System.Windows.Forms.Padding(2);
-            this.File.Size = new System.Drawing.Size(740, 213);
+            this.File.Size = new System.Drawing.Size(747, 213);
             this.File.TabIndex = 8;
             this.File.TabStop = false;
             this.File.Text = "選択ファイル";
@@ -179,23 +180,33 @@
             this.musicTimer.Interval = 1000;
             this.musicTimer.Tick += new System.EventHandler(this.musicTimer_Tick);
             // 
-            // progressBar1
+            // AudioProgressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(16, 31);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(717, 10);
-            this.progressBar1.TabIndex = 9;
+            this.AudioProgressBar.Location = new System.Drawing.Point(16, 31);
+            this.AudioProgressBar.Name = "AudioProgressBar";
+            this.AudioProgressBar.Size = new System.Drawing.Size(717, 10);
+            this.AudioProgressBar.TabIndex = 9;
             // 
             // playbackTime
             // 
-            this.playbackTime.Controls.Add(this.progressBar1);
+            this.playbackTime.Controls.Add(this.PlaybackTimeLabel);
+            this.playbackTime.Controls.Add(this.AudioProgressBar);
             this.playbackTime.Font = new System.Drawing.Font("ＭＳ 明朝", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.playbackTime.Location = new System.Drawing.Point(12, 437);
+            this.playbackTime.Location = new System.Drawing.Point(19, 437);
             this.playbackTime.Name = "playbackTime";
             this.playbackTime.Size = new System.Drawing.Size(745, 47);
             this.playbackTime.TabIndex = 9;
             this.playbackTime.TabStop = false;
             this.playbackTime.Text = "再生時間";
+            // 
+            // PlaybackTimeLabel
+            // 
+            this.PlaybackTimeLabel.AutoSize = true;
+            this.PlaybackTimeLabel.Location = new System.Drawing.Point(590, 15);
+            this.PlaybackTimeLabel.Name = "PlaybackTimeLabel";
+            this.PlaybackTimeLabel.Size = new System.Drawing.Size(35, 12);
+            this.PlaybackTimeLabel.TabIndex = 10;
+            this.PlaybackTimeLabel.Text = "--:--";
             // 
             // Form1
             // 
@@ -213,6 +224,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.File.ResumeLayout(false);
             this.playbackTime.ResumeLayout(false);
+            this.playbackTime.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,8 +246,9 @@
         private System.Windows.Forms.Button repeat;
         private System.Windows.Forms.GroupBox File;
         private System.Windows.Forms.Timer musicTimer;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar AudioProgressBar;
         private System.Windows.Forms.GroupBox playbackTime;
+        private System.Windows.Forms.Label PlaybackTimeLabel;
     }
 }
 

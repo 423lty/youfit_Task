@@ -82,6 +82,9 @@
     <Compile Include="AudioPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="AudioPlayerTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FileManager.cs">
       <SubType>Form</SubType>
     </Compile>

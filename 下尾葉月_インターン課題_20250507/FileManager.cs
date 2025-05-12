@@ -1,6 +1,7 @@
 ﻿using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,13 @@ namespace 下尾葉月_インターン課題_20250507
         {
             //読み込み
             LoadFile(sender, e);
+
+            //リピート画像のリサイズ
+            Bitmap resizedIcon = new Bitmap(Properties.Resources._default, repeat.Width, repeat.Height);
+
+            //画像の添付
+            repeat.Image = resizedIcon;
+            
         }
 
         /// <summary>

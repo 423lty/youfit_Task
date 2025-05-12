@@ -106,6 +106,11 @@ namespace 下尾葉月_インターン課題_20250507
                 //総再生時間を取得
                 allMusicPlaybackTime = GetMusicAllTime(fullPath);
 
+                //progressbarの設定
+                AudioProgressBar.Maximum = (int)allMusicPlaybackTime.TotalSeconds;
+                AudioProgressBar.Minimum = InitProgressBarValue;
+                AudioProgressBar.Value = InitProgressBarValue;
+
                 //テキストの変更
                 playBack.Text = "停止";
             }
@@ -156,45 +161,6 @@ namespace 下尾葉月_インターン課題_20250507
             repeat.Image = changeIcon;
         }
 
-        /// <summary>
-        /// 総再生時間を取得
-        /// </summary>
-        /// <param name="filePath">取得するパス</param>
-        /// <returns>総再生時間を取得</returns>
-        TimeSpan GetMusicAllTime(string filePath)
-        {
-            try
-            {
-                //指定したパスの総再生時間を取得
-                using (var reader = new AudioFileReader(filePath))
-                    return reader.TotalTime;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return TimeSpan.Zero;
-        }
-
-        /// <summary>
-        /// 現在の再生時間を取得
-        /// </summary>
-        /// <returns>現在の再生時間を取得</returns>
-        TimeSpan GetMusicCurrentTime()
-        {
-            try
-            {
-                if (audio != null)
-                    return audio.CurrentTime;
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-
-            return TimeSpan.Zero;
-        }
-
         //音楽のリピート機能
         bool isRepeatMusic = false;
 
@@ -207,10 +173,5 @@ namespace 下尾葉月_インターン課題_20250507
         //現在の音楽のインデックス
         int currentMusicIndex = 0;
 
-        //再生する音楽の総再生時間を管理する変数
-        TimeSpan allMusicPlaybackTime;
-
-        //現在の再生時間
-        TimeSpan currentMusicPlaybackTime;
     }
 }

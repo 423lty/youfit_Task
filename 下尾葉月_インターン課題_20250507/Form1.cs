@@ -27,6 +27,11 @@ namespace 下尾葉月_インターン課題_20250507
         //ファイルのパスを記憶する変数
         Dictionary<string, string> fullPathDirectory = new Dictionary<string, string>();
 
+        /// <summary>
+        /// 音楽再生管理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void musicTimer_Tick(object sender, EventArgs e)
         {
             //audioに音楽ファイルが付与されている状態
@@ -34,6 +39,9 @@ namespace 下尾葉月_インターン課題_20250507
             {
                 //現在の音楽再生時間を取得
                 currentMusicPlaybackTime = GetMusicCurrentTime();
+
+                //再生時間からバーの更新をする
+                UpdateProgressBar();
 
                 //現在の再生時間が総再生時間に達した場合
                 if (currentMusicPlaybackTime >= allMusicPlaybackTime)
@@ -74,5 +82,6 @@ namespace 下尾葉月_インターン課題_20250507
             }
                 
         }
+
     }
 }
