@@ -79,39 +79,37 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AudioPlayer.cs">
+    <Compile Include="Audio\AudioPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AudioPlayerTime.cs">
+    <Compile Include="Audio\AudioPlayerTimer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FileManager.cs">
+    <Compile Include="Manager\FileManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="UI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="UI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="MusicManager.cs">
+    <Compile Include="UI\AudioButton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Manager\MusicManager.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Manager\FileManager.resx">
+      <DependentUpon>FileManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\fileOpen.datasource" />
     <None Include="Properties\DataSources\Form1.datasource" />
@@ -122,6 +120,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -151,16 +154,22 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\repeat_icons.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\default_icon.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="image\default.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="image\repeat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\previous.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

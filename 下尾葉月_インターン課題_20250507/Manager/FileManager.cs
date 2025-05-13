@@ -14,48 +14,22 @@ namespace 下尾葉月_インターン課題_20250507
     /// <summary>
     /// ファイルの保存や管理のクラス
     /// </summary>
-    public partial class Form1 : Form
+    public partial class Form1
     {
-        /// <summary>
-        /// フォームを開いたときの処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void Form1_Load(object sender, EventArgs e)
-        {
-            //読み込み
-            LoadFile(sender, e);
-
-            //リピート画像のリサイズ
-            Bitmap resizedIcon = new Bitmap(Properties.Resources._default, repeat.Width, repeat.Height);
-
-            //画像の添付
-            repeat.Image = resizedIcon;
-            
-        }
-
-        /// <summary>
-        /// 終了をしたときの保存処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //ファイルの保存
-            SaveFile(sender, e);
-        }
-
         /// <summary>
         /// ファイルを読み込む
         /// </summary>
-        void LoadFile(object sender, EventArgs e)
+        public void LoadFile(object sender, EventArgs e)
         {
             try
             {
                 //データファイルを取得
                 string dataFilePath = Path.Combine(saveDataDir, dataName);
 
-                //ファイルが存在する場合のみ実行
+                //データファイルを取得
+                string volumePath = Path.Combine(saveSoundDir, volumeName);
+
+                //データファイルが存在する場合のみ実行
                 if (System.IO.File.Exists(dataFilePath))
                 {
                     //データを取得
@@ -99,6 +73,19 @@ namespace 下尾葉月_インターン課題_20250507
                     }
 
                 }
+
+                //ボリュームファイルが存在する場合
+                if (System.IO.File.Exists(volumePath))
+                {
+                    //ボリュームを取得
+                    string volume=System.IO.File.ReadAllText(volumePath);
+
+                    //int型に変換
+                    //int intToVolume = int.TryParse(volume);
+                    
+                    ////その大きさが0以上100以下の場合適応
+                    //if(volume)
+                }
             }
             catch (Exception ex)
             {
@@ -109,7 +96,7 @@ namespace 下尾葉月_インターン課題_20250507
         /// <summary>
         /// ファイルを保存
         /// </summary>
-        void SaveFile(object sender, EventArgs e)
+        public void SaveFile(object sender, EventArgs e)
         {
             //trycatchで失敗した場合に防止
             try
@@ -202,6 +189,11 @@ namespace 下尾葉月_インターン課題_20250507
                         }
                     }
 
+                    //音量の保存位置の取得
+                    string volumeDataPath = Path.Combine(saveSoundDir, volumeName);
+
+                    //文字列型にして保存
+                    System.IO.File.WriteAllText(volumeDataPath,Convert.ToString(volume), Encoding.UTF8);
 
                 }
                 //一つも保存するデータが存在しない場合
@@ -247,46 +239,11 @@ namespace 下尾葉月_インターン課題_20250507
         }
 
         /// <summary>
-        /// 音楽ファイルの要素を取得して詳しい情報を返却
-        /// </summary>
-        /// <returns></returns>
-        List<string> GetListViewItem()
-        {
-            List<string> content = new List<string>();
-
-            foreach (ListViewItem item in musicList.Items)
-            {
-                //それぞれの要素を格納
-                string fileName = item.SubItems[FileNameIndex].Text;
-                string date = item.SubItems[DateNameIndex].Text;
-                string size = item.SubItems[TypeNameIndex].Text;
-                string type = item.SubItems[SizeNameIndex].Text;
-
-                //要素を追加
-                content.Add($"{fileName},{date},{size},{type}");
-            }
-
-            return content;
-
-        }
-
-        /// <summary>
-        /// 指定したディレクトリが存在する場合ディレクトリを削除する
-        /// </summary>
-        /// <param name="dirPath">削除するディレクトリ</param>
-        void DeleteDirectory(string dirPath)
-        {
-            //ディレクトリないにファイルが存在しない場合ファイルを削除
-            if (Directory.GetFiles(dirPath).Length == 0)
-                Directory.Delete(dirPath);
-        }
-
-        /// <summary>
         /// ファイルを参照する
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void BrowseFilesEvent(object sender, EventArgs e)
+        public void BrowseFilesEvent(object sender, EventArgs e)
         {
             //ファイルを開く
             OpenFileDialog ofd = new OpenFileDialog();
@@ -306,7 +263,7 @@ namespace 下尾葉月_インターン課題_20250507
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void dragDropBox_DragDrop(object sender, DragEventArgs e)
+        public void dragDropBox_DragDrop(object sender, DragEventArgs e)
         {
             //try catch
             try
@@ -332,13 +289,24 @@ namespace 下尾葉月_インターン課題_20250507
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void dragDropBox_DragEnter(object sender, DragEventArgs e)
+        public void dragDropBox_DragEnter(object sender, DragEventArgs e)
         {
             //ファイルをコピーする
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
             else
                 e.Effect = DragDropEffects.None;
+        }
+
+        /// <summary>
+        /// 指定したディレクトリが存在する場合ディレクトリを削除する
+        /// </summary>
+        /// <param name="dirPath">削除するディレクトリ</param>
+        public void DeleteDirectory(string dirPath)
+        {
+            //ディレクトリないにファイルが存在しない場合ファイルを削除
+            if (Directory.GetFiles(dirPath).Length == 0)
+                Directory.Delete(dirPath);
         }
 
         //ローカルディスクへのパス
@@ -355,6 +323,9 @@ namespace 下尾葉月_インターン課題_20250507
 
         //読み込むサウンドファイル名
         const string soundFileName = "soundFile";
+
+        //ボリュームのテキストファイル名
+        const string volumeName = "volumeFile.txt";
 
         //保存するデータファイルパス
         readonly string saveDataDir = Path.Combine(Environment.GetFolderPath(localFilePath), saveFileName, LoadFileName);
@@ -377,5 +348,10 @@ namespace 下尾葉月_インターン課題_20250507
         //一行に存在する最大の要素数
         const int SaveFileDataMaxIndex = 4;
 
+        //ファイルのパスを記憶する変数
+        Dictionary<string, string> fullPathDirectory = new Dictionary<string, string>();
+
+        //1MB
+        const int B = 1024;
     }
 }
