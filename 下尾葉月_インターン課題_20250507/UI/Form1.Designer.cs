@@ -190,6 +190,8 @@
             this.volumeBar.Size = new System.Drawing.Size(134, 45);
             this.volumeBar.TabIndex = 10;
             this.volumeBar.TickFrequency = 10;
+            this.volumeBar.Maximum = 100;
+            this.volumeBar.Minimum = 0;
             this.volumeBar.Scroll += new System.EventHandler(this.volumeBar_Scroll);
             // 
             // previousMusicButton

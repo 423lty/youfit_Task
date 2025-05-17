@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -78,14 +79,21 @@ namespace 下尾葉月_インターン課題_20250507
                 if (System.IO.File.Exists(volumePath))
                 {
                     //ボリュームを取得
-                    string volume=System.IO.File.ReadAllText(volumePath);
+                    string volumeString = System.IO.File.ReadAllText(volumePath, Encoding.UTF8);
 
-                    //int型に変換
-                    //int intToVolume = int.TryParse(volume);
-                    
-                    ////その大きさが0以上100以下の場合適応
-                    //if(volume)
+                    //変換    
+                    if (float.TryParse(volumeString, NumberStyles.Float, CultureInfo.InvariantCulture, out float saveVolume))
+                        AttachVolume(saveVolume);
+                    else
+                        AttachVolume(DefaultVolume);
+                    //float 型に変換
+                    //float volume = float.Parse(volumeString, System.Globalization.CultureInfo.InvariantCulture);
+
+                        //現在のvolumeに適応
+                        //AttachVolume(volume);
                 }
+                else
+                    AttachVolume(DefaultVolume);
             }
             catch (Exception ex)
             {
@@ -132,13 +140,10 @@ namespace 下尾葉月_インターン課題_20250507
 
                         //item配列の要素を取り出して格納
                         foreach (ListViewItem.ListViewSubItem i in item.SubItems)
-                        {
                             items.Add(i.Text);
-                        }
 
                         //ファイルにカンマ区切りで格納
                         content.Add(string.Join(",", items));
-
                     }
 
                     //ファイルのデータを文字化け防止して保存
@@ -190,10 +195,11 @@ namespace 下尾葉月_インターン課題_20250507
                     }
 
                     //音量の保存位置の取得
+                    string volumeString = volume.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     string volumeDataPath = Path.Combine(saveSoundDir, volumeName);
 
                     //文字列型にして保存
-                    System.IO.File.WriteAllText(volumeDataPath,Convert.ToString(volume), Encoding.UTF8);
+                    System.IO.File.WriteAllText(volumeDataPath, volumeString, Encoding.UTF8);
 
                 }
                 //一つも保存するデータが存在しない場合
@@ -220,7 +226,6 @@ namespace 下尾葉月_インターン課題_20250507
 
                             //ディレクトリないにファイルが存在しない場合ファイルを削除
                             DeleteDirectory(fileSoundDir);
-
                         }
 
                         if (System.IO.File.Exists(fileDataPath))

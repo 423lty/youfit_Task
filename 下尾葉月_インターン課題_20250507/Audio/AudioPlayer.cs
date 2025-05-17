@@ -19,17 +19,6 @@ namespace 下尾葉月_インターン課題_20250507
     public partial class Form1
     {
         /// <summary>
-        /// 音量の初期化
-        /// </summary>
-        void InitVolume()
-        {
-            //音量
-            volumeBar.Value = DefaultVolume / VolumeTrance;
-            volume = volumeBar.Value;
-            wavePlayer.Volume = volume;
-        }
-
-        /// <summary>
         /// 音楽を再生処理
         /// </summary>
         public void PlayMusic()
@@ -82,7 +71,7 @@ namespace 下尾葉月_インターン課題_20250507
                     wavePlayer = new WaveOutEvent();
 
                     //ボリュームの設定
-                    wavePlayer.Volume = volumeBar.Value / VolumeTrance;
+                    wavePlayer.Volume = volume / VolumeTrance;
 
                     //選択したインデックスを現在再生のインデックスに変更
                     currentMusicIndex = index;
@@ -95,9 +84,13 @@ namespace 下尾葉月_インターン課題_20250507
 
                     //ファイルのパスを取得し新しいaudioに変更
                     audio = new AudioFileReader(fullPath);
+                    audio.Volume = volume / VolumeTrance;
 
                     //音楽ファイルを初期化で設定
                     wavePlayer.Init(audio);
+
+                    //音量の調節
+                    wavePlayer.Volume = this.volume / VolumeTrance;
 
                     //再生
                     wavePlayer.Play();
@@ -118,6 +111,7 @@ namespace 下尾葉月_インターン課題_20250507
                     AudioProgressBar.Maximum = (int)allMusicPlaybackTime.TotalSeconds;
                     AudioProgressBar.Minimum = InitProgressBarValue;
                     AudioProgressBar.Value = InitProgressBarValue;
+
 
                 }
                 //再生ボタンの変更
@@ -203,6 +197,19 @@ namespace 下尾葉月_インターン課題_20250507
                 PlayMusic();
         }
 
+        /// <summary>
+        /// ボリュームのアタッチ
+        /// </summary>
+        /// <param name="volume"></param>
+        void AttachVolume(float volume)
+        {
+            //音量の制限
+            this.volume = Math.Max(MinVolume, Math.Min(MaxVolume* VolumeTrance, volume));
+            volumeBar.Value = (int)this.volume;
+            if(wavePlayer!=null)
+                wavePlayer.Volume = this.volume / VolumeTrance;
+        }
+
         //再生player
         IWavePlayer wavePlayer = new WaveOutEvent();
 
@@ -222,9 +229,15 @@ namespace 下尾葉月_インターン課題_20250507
         const int DefaultVolume = 40;
 
         //0.0～1.0に変換
-        const int VolumeTrance = 100;
+        const float VolumeTrance = 100f;
 
         //音量
         float volume;
+
+        //最大の音量
+        const float MaxVolume = 1.0f;
+
+        //最低の音量
+        const float MinVolume = 0.0f;
     }
 }

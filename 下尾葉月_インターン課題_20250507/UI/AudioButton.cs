@@ -152,7 +152,6 @@ namespace 下尾葉月_インターン課題_20250507
             //位置を中央に再設定
             button.ImageAlign = ContentAlignment.MiddleCenter;
 
-
             //新しい図形を定義
             GraphicsPath gp = new GraphicsPath();
 

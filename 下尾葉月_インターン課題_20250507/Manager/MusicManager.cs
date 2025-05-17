@@ -14,7 +14,6 @@ namespace 下尾葉月_インターン課題_20250507
     /// </summary>
     public partial class Form1
     {
-
         /// <summary>
         /// 指定した音楽を削除する
         /// </summary>
@@ -91,7 +90,5 @@ namespace 下尾葉月_インターン課題_20250507
             else
                 MessageBox.Show("選択されたファイルは対応しておりません");
         }
-
-
     }
 }

@@ -27,9 +27,6 @@ namespace 下尾葉月_インターン課題_20250507
 
             //アイコンの初期化
             InitButtonIcon();
-
-            //音量の初期化
-            InitVolume();
         }
 
         /// <summary>
@@ -97,8 +94,6 @@ namespace 下尾葉月_インターン課題_20250507
         {
             //前回の履歴の読み込み
             LoadFile(sender, e);
-
-            //buttonの読み込み
         }
 
         /// <summary>
