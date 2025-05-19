@@ -60,7 +60,7 @@ namespace 下尾葉月_インターン課題_20250507
         string ObtainPlaybackTime(TimeSpan time)
         {
             //再生時間が1時間以上
-            if (time.TotalHours >= 1)
+            if (time.TotalHours >= TimeTotalTimeHours)
                 return time.ToString(MoreHours);
             //再生時間が1時間未満
             return time.ToString(LessHours);

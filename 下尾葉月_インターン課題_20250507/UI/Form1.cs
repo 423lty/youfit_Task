@@ -115,31 +115,8 @@ namespace 下尾葉月_インターン課題_20250507
             for (int i = DateNameIndex; i < items.Count; i++)
                 listViewItem.SubItems.Add(items[i]);
 
+            //格納したListViewItemの返却
             return listViewItem;
-        }
-
-        /// <summary>
-        /// 音楽ファイルの要素を取得して詳しい情報を返却
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetListViewItem()
-        {
-            List<string> content = new List<string>();
-
-            foreach (ListViewItem item in musicList.Items)
-            {
-                //それぞれの要素を格納
-                string fileName = item.SubItems[FileNameIndex].Text;
-                string date = item.SubItems[DateNameIndex].Text;
-                string size = item.SubItems[TypeNameIndex].Text;
-                string type = item.SubItems[SizeNameIndex].Text;
-
-                //要素を追加
-                content.Add($"{fileName},{date},{size},{type}");
-            }
-
-            return content;
-
         }
 
         /// <summary>
@@ -166,9 +143,6 @@ namespace 下尾葉月_インターン課題_20250507
                 //ラベルの更新
                 PlaybackTimeLabel.Text = $"{ObtainPlaybackTime(currentMusicPlaybackTime)}/{ObtainPlaybackTime(allMusicPlaybackTime)}";
             }
-
-
         }
-
     }
 }

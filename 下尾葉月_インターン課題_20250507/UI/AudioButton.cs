@@ -80,7 +80,7 @@ namespace 下尾葉月_インターン課題_20250507
                 if (hasNext)
                     MusicSkip(currentIndex + 1);
                 else
-                    MusicSkip(StartMusicIndex, false);
+                    MusicSkip(StartMusicIndex);
             }
             else
                 MessageBox.Show("音楽ファイルを選択してください");

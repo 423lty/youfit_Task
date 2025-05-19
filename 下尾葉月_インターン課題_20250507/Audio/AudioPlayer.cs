@@ -97,6 +97,8 @@ namespace 下尾葉月_インターン課題_20250507
                     //音楽のリストから選択した名前を適応
                     playerAudioName.Text = musicName;
 
+                    UpdateNowPlayingMarker();
+
                     //総再生時間を取得
                     allMusicPlaybackTime = GetMusicAllTime(fullPath);
 
@@ -147,6 +149,7 @@ namespace 下尾葉月_インターン課題_20250507
                 audio.Dispose();
                 audio = null;
             }
+            //再生ボタンの更新
             UpdatePlayButtonIcon();
         }
 
@@ -217,7 +220,6 @@ namespace 下尾葉月_インターン課題_20250507
                 wavePlayer.Volume = this.volume / VolumeTrance;
         }
 
-
         /// <summary>
         /// 音楽の再生時の強調や選択
         /// </summary>
@@ -227,6 +229,66 @@ namespace 下尾葉月_インターン課題_20250507
         {
             item.Selected = flg;
             item.Focused = flg;
+        }
+
+        /// <summary>
+        /// 現在描画されている音楽にマークをつける
+        /// </summary>
+        void UpdateNowPlayingMarker()
+        {
+            //音楽ファイルが存在している場合
+            if (currentMusicIndex >= 0 && currentMusicIndex < musicList.Items.Count)
+            {
+                //範囲と要素等の取得
+                Rectangle itemRect = musicList.GetItemRect(currentMusicIndex);
+                Point listViewLocationPos = musicList.Location;
+                Point markerPos = new Point(listViewLocationPos.X + itemRect.X - PointCorrectX, listViewLocationPos.Y + itemRect.Y);
+
+                //位置の指定と表示設定
+                pictureBox.Visible = true;
+                pictureBox.Location = markerPos;
+            }
+            else
+            {
+                pictureBox.Visible = false;
+            }
+        }
+
+        /// <summary>
+        /// ダブルクリック
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListViewDoubleClick(object sender, MouseEventArgs e)
+        {
+            //クリック時のアイテムを取得
+            ListViewHitTestInfo hit = musicList.HitTest(e.Location);
+            ListViewItem clickedItem = hit.Item;
+
+            //クリックされたものがnullじゃなかったら
+            if (clickedItem != null)
+            {
+                //クリックされたのが含まれている場合
+                if (musicList.Items.Contains(clickedItem))
+                {
+                    //クリックした要素のインデックスを取得
+                    int index = clickedItem.Index;
+
+                    //クリックした要素を再生
+                    MusicSkip(index);
+
+                }
+                //含まれていない場合
+                else
+                {
+                    MessageBox.Show("クリックされたアイテムはリストに存在しません。");
+                }
+            }
+            else
+            {
+                // 空白部分がダブルクリックされた場合の処理
+                MessageBox.Show("アイテムが選択されていません。");
+            }
         }
 
         //再生player
@@ -258,5 +320,11 @@ namespace 下尾葉月_インターン課題_20250507
 
         //最低の音量
         const float MinVolume = 0.0f;
+
+        //再生中の音楽ファイル目印
+        readonly Bitmap playingItemImage = Properties.Resources._this;
+
+        //point座標をずらす量
+        const int PointCorrectX = 30;
     }
 }

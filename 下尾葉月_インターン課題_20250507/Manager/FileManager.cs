@@ -44,7 +44,6 @@ namespace 下尾葉月_インターン課題_20250507
 
                         if (datas.Length == SaveFileDataMaxIndex)
                         {
-
                             //各々の要素を取得
                             string fileName = datas[FileNameIndex];
                             string dateName = datas[DateNameIndex];
@@ -67,12 +66,9 @@ namespace 下尾葉月_インターン課題_20250507
 
                                 //データをfullPathDirectoryに保存
                                 fullPathDirectory[fileName] = soundDataPath;
-
                             }
                         }
-
                     }
-
                 }
 
                 //ボリュームファイルが存在する場合
@@ -190,7 +186,7 @@ namespace 下尾葉月_インターン課題_20250507
                     }
 
                     //音量の保存位置の取得
-                    string volumeString = (volume).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    string volumeString = (volume).ToString(CultureInfo.InvariantCulture);
                     string volumeDataPath = Path.Combine(saveSoundDir, volumeName);
 
                     //文字列型にして保存
@@ -205,30 +201,23 @@ namespace 下尾葉月_インターン課題_20250507
                         //保存データファイルを検索
                         string fileDataPath = Path.Combine(saveDataDir, dataName);
 
-                        //保存データのディレクトリ
-                        string fielDataDir = saveDataDir;
-
-                        //保存音楽データのディレクトリ
-                        string fileSoundDir = saveSoundDir;
-
-
                         //音楽ファイルのそれぞれのデータを削除する
-                        if (Directory.Exists(fileSoundDir))
+                        if (Directory.Exists(saveSoundDir))
                         {
                             //ディレクトリないに存在する音声ファイルを一つずつ取り出して削除
-                            foreach (string file in Directory.GetFiles(fileSoundDir))
+                            foreach (string file in Directory.GetFiles(saveSoundDir))
                                 System.IO.File.Delete(file);
 
                             //ディレクトリないにファイルが存在しない場合ファイルを削除
-                            DeleteDirectory(fileSoundDir);
+                            DeleteDirectory(saveSoundDir);
                         }
 
                         if (System.IO.File.Exists(fileDataPath))
                             System.IO.File.Delete(fileDataPath);
 
                         //保存するテキストファイルが存在しない場合削除する
-                        if (Directory.Exists(fielDataDir))
-                            Directory.Delete(fielDataDir);
+                        if (Directory.Exists(saveDataDir))
+                            Directory.Delete(saveDataDir);
                     }
                 }
             }
@@ -247,15 +236,12 @@ namespace 下尾葉月_インターン課題_20250507
         {
             //ファイルを開く
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "ファイルを開く";
-            ofd.Filter = "*.mp3ファイル(*.mp3) *.wavファイル(*.wav)|*.mp3;*wav";
+            ofd.Title = OpenTitleText;
+            ofd.Filter = FilterText;
 
             //選択したファイルが大丈夫な場合
             if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = ofd.FileName;
-                FilterMusicType(filePath);
-            }
+                FilterMusicType(ofd.FileName);
         }
 
         /// <summary>
@@ -273,15 +259,12 @@ namespace 下尾葉月_インターン課題_20250507
 
                 //ファイルが以下に該当するか
                 foreach (string file in files)
-                {
                     FilterMusicType(file);
-                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         /// <summary>
@@ -359,5 +342,11 @@ namespace 下尾葉月_インターン課題_20250507
 
         //1MB
         const int B = 1024;
+
+        //Filterで使用するテキストデータ
+        const string FilterText = "*.mp3ファイル(*.mp3) *.wavファイル(*.wav)|*.mp3;*wav";
+
+        //表示するタイトルのテキスト
+        const string OpenTitleText = "ファイルを開く";
     }
 }
