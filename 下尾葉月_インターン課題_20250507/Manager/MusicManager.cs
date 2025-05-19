@@ -9,6 +9,12 @@ using System.Windows.Forms;
 
 namespace 下尾葉月_インターン課題_20250507
 {
+    //使用する拡張子
+    enum FileExtensions
+    {
+        MP3,WAV
+    }
+
     /// <summary>
     /// 音楽の情報管理
     /// </summary>
@@ -59,8 +65,8 @@ namespace 下尾葉月_インターン課題_20250507
 
             //それぞれの要素を取得
             string fileName = fi.Name;
-            string addDate = DateTime.Now.ToString("yyyy/MM/dd");
-            string fileType = fi.Extension.TrimStart('.');
+            string addDate = DateTime.Now.ToString(DateFormat);
+            string fileType = fi.Extension.TrimStart(TrimChars);
             string fileSize = (fi.Length / (B * B)).ToString("0.0") + "MB";
 
             //パスを追加
@@ -83,12 +89,22 @@ namespace 下尾葉月_インターン課題_20250507
         private void FilterMusicType(string file)
         {
             //.mp3または.wavのみ
-            if (file.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase) ||
-                file.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
+            if (file.EndsWith(extensions[(int)FileExtensions.MP3], StringComparison.OrdinalIgnoreCase) ||
+                file.EndsWith(extensions[(int)FileExtensions.WAV], StringComparison.OrdinalIgnoreCase))
                 //音楽ファイルを追加
                 MusicFileAddItems(file);
             else
                 MessageBox.Show("選択されたファイルは対応しておりません");
         }
+
+        //拡張子の一覧
+        List<string> extensions = new List<string>() { ".mp3", ".wav" };
+
+        //データ型のフォーマット
+        const string DateFormat = "yyyy/MM/dd";
+
+        //取り出すキャラ型
+        const char TrimChars = '.';
+
     }
 }

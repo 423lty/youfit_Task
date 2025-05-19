@@ -29,6 +29,7 @@ namespace 下尾葉月_インターン課題_20250507
             //前
             previousMusicButton.Image = SettingButtonIcon(previousMusicButton, previousMusicButtonIconImage);
 
+            deleteButton.Image=SettingButtonIcon(deleteButton,trashBoxButtonIconImage);
             //初期のアイコンの設定
             UpdatePlayButtonIcon();
 
@@ -185,6 +186,9 @@ namespace 下尾葉月_インターン課題_20250507
 
         //停止のアイコン
         readonly Bitmap stopMusicButtonIconImage = Properties.Resources.stop;
+
+        //ゴミ箱のアイコン
+        readonly Bitmap trashBoxButtonIconImage = Properties.Resources.TrashBox;
 
         //ボタンの中心
         const int BtnCenter = 0;

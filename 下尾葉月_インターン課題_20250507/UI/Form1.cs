@@ -14,7 +14,6 @@ using System.Windows.Forms;
 
 namespace 下尾葉月_インターン課題_20250507
 {
-
     /// <summary>
     /// デフォルト
     /// </summary>
@@ -46,43 +45,38 @@ namespace 下尾葉月_インターン課題_20250507
                 UpdateProgressBar();
 
                 //現在の再生時間が総再生時間に達した場合
-                if (currentMusicPlaybackTime >= allMusicPlaybackTime)
+                if (wavePlayer.PlaybackState == PlaybackState.Stopped && wavePlayer != null)
                 {
-
                     //TimerツールのEnableを切る
                     musicTimer.Stop();
 
-                    //リピートしていない場合
+                    //音楽の再生を止める
+                    EndPlayBack();
+
+                    //同じ曲のリピートしていない場合
                     if (!isRepeatMusic)
                     {
                         //次のインデックスを取得
                         int nextIndex = currentMusicIndex + 1;
 
+                        //すべての選択状態の解除
+                        foreach (ListViewItem item in musicList.Items)
+                            MusicSelected(item, false);
+
                         //もし次のインデックスが存在している場合
                         if (nextIndex < musicList.Items.Count)
-                        {
-                            //選択された状態を付与
-                            musicList.Items[nextIndex].Selected = true;
-                            musicList.Items[nextIndex].Focused = true;
-                            musicList.EnsureVisible(nextIndex);
-
-                            //現在の再生インデックスの更新
                             currentMusicIndex = nextIndex;
-
-                            //次の音楽を再生
-                            PlayNextMusic(currentMusicIndex);
-                        }
-                        //存在していない場合
+                        //最後の曲だった場合最初の曲に戻す
                         else
-                            StopMusic();
+                            currentMusicIndex = StartMusicIndex;
 
+                        //選択された状態を付与
+                        MusicSelected(musicList.Items[currentMusicIndex]);
                     }
-                    //リピート再生
-                    else
-                        PlayNextMusic(currentMusicIndex);
+                    //次の音楽を再生かリピート祭祀
+                    PlayNextMusic(currentMusicIndex);
                 }
             }
-                
         }
 
         /// <summary>
@@ -155,14 +149,7 @@ namespace 下尾葉月_インターン課題_20250507
         /// <param name="e"></param>
         private void volumeBar_Scroll(object sender, EventArgs e)
         {
-            if (wavePlayer != null)
-            {
-                //ボリュームの調節
-                volume = volumeBar.Value / VolumeTrance;
-
-                //設定
-                wavePlayer.Volume = volume;
-            }
+            AttachVolume(volumeBar.Value);
         }
 
         /// <summary>

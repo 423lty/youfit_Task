@@ -40,7 +40,7 @@ namespace 下尾葉月_インターン課題_20250507
                     foreach (var saveTextData in saveAllTextData)
                     {
                         //カンマ区切りで取得
-                        string[] datas = saveTextData.Split(',');
+                        string[] datas = saveTextData.Split(Convert.ToChar(StorageDesignator));
 
                         if (datas.Length == SaveFileDataMaxIndex)
                         {
@@ -86,11 +86,6 @@ namespace 下尾葉月_インターン課題_20250507
                         AttachVolume(saveVolume);
                     else
                         AttachVolume(DefaultVolume);
-                    //float 型に変換
-                    //float volume = float.Parse(volumeString, System.Globalization.CultureInfo.InvariantCulture);
-
-                        //現在のvolumeに適応
-                        //AttachVolume(volume);
                 }
                 else
                     AttachVolume(DefaultVolume);
@@ -143,7 +138,7 @@ namespace 下尾葉月_インターン課題_20250507
                             items.Add(i.Text);
 
                         //ファイルにカンマ区切りで格納
-                        content.Add(string.Join(",", items));
+                        content.Add(string.Join(StorageDesignator, items));
                     }
 
                     //ファイルのデータを文字化け防止して保存
@@ -195,7 +190,7 @@ namespace 下尾葉月_インターン課題_20250507
                     }
 
                     //音量の保存位置の取得
-                    string volumeString = volume.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    string volumeString = (volume).ToString(System.Globalization.CultureInfo.InvariantCulture);
                     string volumeDataPath = Path.Combine(saveSoundDir, volumeName);
 
                     //文字列型にして保存
@@ -310,7 +305,7 @@ namespace 下尾葉月_インターン課題_20250507
         public void DeleteDirectory(string dirPath)
         {
             //ディレクトリないにファイルが存在しない場合ファイルを削除
-            if (Directory.GetFiles(dirPath).Length == 0)
+            if (Directory.GetFiles(dirPath).Length == NoFileDirectory)
                 Directory.Delete(dirPath);
         }
 
@@ -337,6 +332,12 @@ namespace 下尾葉月_インターン課題_20250507
 
         //保存する音楽ファイルパス
         readonly string saveSoundDir = Path.Combine(Environment.GetFolderPath(localFilePath), saveFileName, soundFileName);
+
+        //保存するときの格納指定子
+        const string StorageDesignator = ",";
+
+        //ディレクトリに存在しないファイルの内部個数
+        const int NoFileDirectory = 0;
 
         //ファイルのインデックス
         const int FileNameIndex = 0;

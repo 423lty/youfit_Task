@@ -23,7 +23,6 @@ namespace 下尾葉月_インターン課題_20250507
         /// </summary>
         public void PlayMusic()
         {
-
             //音楽の要素数
             if (musicList.Items.Count > 0)
             {
@@ -70,9 +69,6 @@ namespace 下尾葉月_インターン課題_20250507
                     //新しく確保
                     wavePlayer = new WaveOutEvent();
 
-                    //ボリュームの設定
-                    wavePlayer.Volume = volume / VolumeTrance;
-
                     //選択したインデックスを現在再生のインデックスに変更
                     currentMusicIndex = index;
 
@@ -90,7 +86,7 @@ namespace 下尾葉月_インターン課題_20250507
                     wavePlayer.Init(audio);
 
                     //音量の調節
-                    wavePlayer.Volume = this.volume / VolumeTrance;
+                    AttachVolume(volume);
 
                     //再生
                     wavePlayer.Play();
@@ -111,8 +107,6 @@ namespace 下尾葉月_インターン課題_20250507
                     AudioProgressBar.Maximum = (int)allMusicPlaybackTime.TotalSeconds;
                     AudioProgressBar.Minimum = InitProgressBarValue;
                     AudioProgressBar.Value = InitProgressBarValue;
-
-
                 }
                 //再生ボタンの変更
                 UpdatePlayButtonIcon(false);
@@ -136,6 +130,27 @@ namespace 下尾葉月_インターン課題_20250507
         }
 
         /// <summary>
+        /// 再生の終了
+        /// </summary>
+        void EndPlayBack()
+        {
+            //nullじゃないかつ再生している場合
+            if (wavePlayer != null && wavePlayer.PlaybackState == PlaybackState.Playing)
+            {
+                wavePlayer.Stop();
+                wavePlayer.Dispose();
+                wavePlayer = null;
+            }
+            //audioがnullじゃない場合
+            if (audio != null)
+            {
+                audio.Dispose();
+                audio = null;
+            }
+            UpdatePlayButtonIcon();
+        }
+
+        /// <summary>
         /// 音楽のスキップ機能
         /// </summary>
         /// <param name="index">次のインデックス</param>
@@ -156,17 +171,13 @@ namespace 下尾葉月_インターン課題_20250507
 
                 //現在の音楽の指定をすべて削除
                 foreach (ListViewItem item in musicList.Items)
-                    item.Selected = false;
-
-                //もし範囲を超えた場合スキップする
-                //if (index < StartMusicIndex || index >= musicList.Items.Count)
-                //  return;
+                    MusicSelected(item, false);
 
                 //インデックス
                 currentMusicIndex = index;
 
                 //音楽が選択されている状態にする
-                musicList.Items[currentMusicIndex].Selected = true;
+                MusicSelected(musicList.Items[currentMusicIndex]);
 
                 //次の音楽の再生
                 if (isPlay)
@@ -185,12 +196,8 @@ namespace 下尾葉月_インターン課題_20250507
         /// <param name="e"></param>
         private void MusicPlayer(object sender, EventArgs e)
         {
-            if (wavePlayer != null && isRepeatMusic)
-            {
-                //wavePlayer.
-            }
             //音楽の停止
-            else if (wavePlayer != null && wavePlayer.PlaybackState == PlaybackState.Playing)
+            if (wavePlayer != null && wavePlayer.PlaybackState == PlaybackState.Playing)
                 StopMusic();
             //再生
             else if (wavePlayer != null && wavePlayer.PlaybackState != PlaybackState.Playing)
@@ -204,10 +211,22 @@ namespace 下尾葉月_インターン課題_20250507
         void AttachVolume(float volume)
         {
             //音量の制限
-            this.volume = Math.Max(MinVolume, Math.Min(MaxVolume* VolumeTrance, volume));
+            this.volume = Math.Max(MinVolume, Math.Min(MaxVolume * VolumeTrance, volume));
             volumeBar.Value = (int)this.volume;
-            if(wavePlayer!=null)
+            if (wavePlayer != null)
                 wavePlayer.Volume = this.volume / VolumeTrance;
+        }
+
+
+        /// <summary>
+        /// 音楽の再生時の強調や選択
+        /// </summary>
+        /// <param name="item">選択したListViewItem</param>
+        /// <param name="flg">状態のフラグ デフォルトでtrue</param>
+        void MusicSelected(ListViewItem item, bool flg = true)
+        {
+            item.Selected = flg;
+            item.Focused = flg;
         }
 
         //再生player
