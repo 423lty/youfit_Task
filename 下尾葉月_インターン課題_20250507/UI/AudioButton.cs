@@ -29,9 +29,13 @@ namespace 下尾葉月_インターン課題_20250507
             //前
             previousMusicButton.Image = SettingButtonIcon(previousMusicButton, previousMusicButtonIconImage);
 
-            deleteButton.Image=SettingButtonIcon(deleteButton,trashBoxButtonIconImage);
+            //削除ボタン
+            deleteButton.Image = SettingButtonIcon(deleteButton, trashBoxButtonIconImage);
+
             //初期のアイコンの設定
             UpdatePlayButtonIcon();
+
+            musicSize.Image = SettingButtonIcon(musicSize, musicVoiceSizeIconImage);
 
             //ボタンを丸くする
             ButtonRound(repeat);
@@ -165,7 +169,6 @@ namespace 下尾葉月_インターン課題_20250507
             //ボタンの背景の調整
             button.FlatStyle = FlatStyle.Flat;
             button.FlatAppearance.BorderSize = 0;
-
         }
 
 
@@ -189,6 +192,9 @@ namespace 下尾葉月_インターン課題_20250507
 
         //ゴミ箱のアイコン
         readonly Bitmap trashBoxButtonIconImage = Properties.Resources.TrashBox;
+
+        //音楽の音量アイコン
+        readonly Bitmap musicVoiceSizeIconImage = Properties.Resources.musicSize;
 
         //ボタンの中心
         const int BtnCenter = 0;

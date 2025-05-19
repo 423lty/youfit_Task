@@ -26,6 +26,9 @@ namespace 下尾葉月_インターン課題_20250507
 
             //アイコンの初期化
             InitButtonIcon();
+
+            //ピッチの初期化
+            InitPitch();
         }
 
         /// <summary>
@@ -120,16 +123,6 @@ namespace 下尾葉月_インターン課題_20250507
         }
 
         /// <summary>
-        /// 音量調節
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void volumeBar_Scroll(object sender, EventArgs e)
-        {
-            AttachVolume(volumeBar.Value);
-        }
-
-        /// <summary>
         /// ProgressBarの更新処理
         /// </summary>
         void UpdateProgressBar()
@@ -144,5 +137,18 @@ namespace 下尾葉月_インターン課題_20250507
                 PlaybackTimeLabel.Text = $"{ObtainPlaybackTime(currentMusicPlaybackTime)}/{ObtainPlaybackTime(allMusicPlaybackTime)}";
             }
         }
+
+        /// <summary>
+        /// ピッチの調節
+        /// </summary>
+        void InitPitch()
+        {
+            //ピッチの調節
+            pitch = DefaultPitch;
+
+            //スライダーの値を初期化
+            pitchSlider.Value = (int)(pitch * PitchCorrect);
+        }
+
     }
 }

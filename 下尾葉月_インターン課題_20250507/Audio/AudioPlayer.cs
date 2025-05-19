@@ -66,9 +66,6 @@ namespace 下尾葉月_インターン課題_20250507
                 //新規再生
                 else
                 {
-                    //新しく確保
-                    wavePlayer = new WaveOutEvent();
-
                     //選択したインデックスを現在再生のインデックスに変更
                     currentMusicIndex = index;
 
@@ -79,11 +76,7 @@ namespace 下尾葉月_インターン課題_20250507
                     string fullPath = fullPathDirectory[musicFile];
 
                     //ファイルのパスを取得し新しいaudioに変更
-                    audio = new AudioFileReader(fullPath);
-                    audio.Volume = volume / VolumeTrance;
-
-                    //音楽ファイルを初期化で設定
-                    wavePlayer.Init(audio);
+                    PitchShifter(fullPath);
 
                     //音量の調節
                     AttachVolume(volume);
@@ -291,11 +284,42 @@ namespace 下尾葉月_インターン課題_20250507
             }
         }
 
+        /// <summary>
+        /// ピッチの調節や初期化
+        /// </summary>
+        /// <param name="fileName">ファイルのパス</param>
+        void PitchShifter(string fileName)
+        {
+            //音楽ファイルを取得
+            audio = new AudioFileReader(fileName);
+
+            //プロバイダーの生成
+            var sampleProvider = audio.ToSampleProvider();
+
+            //newして生成
+            pitchProvider = new SMBPitchShiftingSampleProvider(sampleProvider) { PitchFactor = pitch };
+
+            //音量の初期化
+            audio.Volume = volume / VolumeTrance;
+            
+            //代入
+            var waveProvider = pitchProvider.ToWaveProvider();
+
+            //新しく確保
+            wavePlayer = new WaveOutEvent();
+
+            //音楽ファイルを初期化で設定
+            wavePlayer.Init(waveProvider);
+        }
+
         //再生player
         IWavePlayer wavePlayer = new WaveOutEvent();
 
         //再生する音楽ファイルのパス
         AudioFileReader audio;
+
+        //ピッチのプロバイダー
+        SMBPitchShiftingSampleProvider pitchProvider;
 
         //音楽のリピート機能
         bool isRepeatMusic = false;
@@ -326,5 +350,11 @@ namespace 下尾葉月_インターン課題_20250507
 
         //point座標をずらす量
         const int PointCorrectX = 30;
+
+        //デフォルトのピッチ
+        const float DefaultPitch = 1f;
+
+        //今のピッチ
+        float pitch;
     }
 }

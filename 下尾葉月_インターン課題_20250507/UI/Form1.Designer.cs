@@ -44,6 +44,8 @@ namespace 下尾葉月_インターン課題_20250507
             this.Size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.repeat = new System.Windows.Forms.Button();
             this.File = new System.Windows.Forms.GroupBox();
+            this.pitchSlider = new System.Windows.Forms.TrackBar();
+            this.musicSize = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.previousMusicButton = new System.Windows.Forms.Button();
@@ -53,7 +55,9 @@ namespace 下尾葉月_インターン課題_20250507
             this.playbackTime = new System.Windows.Forms.GroupBox();
             this.playerAudioName = new System.Windows.Forms.Label();
             this.PlaybackTimeLabel = new System.Windows.Forms.Label();
+            this.pitchLabel = new System.Windows.Forms.Label();
             this.File.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pitchSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             this.playbackTime.SuspendLayout();
@@ -74,7 +78,7 @@ namespace 下尾葉月_インターン課題_20250507
             // playBack
             // 
             this.playBack.Font = new System.Drawing.Font("ＭＳ 明朝", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.playBack.Location = new System.Drawing.Point(318, 193);
+            this.playBack.Location = new System.Drawing.Point(295, 193);
             this.playBack.Margin = new System.Windows.Forms.Padding(5);
             this.playBack.Name = "playBack";
             this.playBack.Size = new System.Drawing.Size(64, 64);
@@ -170,6 +174,9 @@ namespace 下尾葉月_インターン課題_20250507
             // 
             // File
             // 
+            this.File.Controls.Add(this.pitchLabel);
+            this.File.Controls.Add(this.pitchSlider);
+            this.File.Controls.Add(this.musicSize);
             this.File.Controls.Add(this.pictureBox);
             this.File.Controls.Add(this.volumeBar);
             this.File.Controls.Add(this.previousMusicButton);
@@ -188,6 +195,27 @@ namespace 下尾葉月_インターン課題_20250507
             this.File.TabStop = false;
             this.File.Text = "選択ファイル";
             // 
+            // pitchSlider
+            // 
+            this.pitchSlider.Location = new System.Drawing.Point(113, 193);
+            this.pitchSlider.Maximum = 20;
+            this.pitchSlider.Minimum = 5;
+            this.pitchSlider.Name = "pitchSlider";
+            this.pitchSlider.Size = new System.Drawing.Size(104, 45);
+            this.pitchSlider.TabIndex = 13;
+            this.pitchSlider.Value = 5;
+            this.pitchSlider.Scroll += new System.EventHandler(this.pitchSlider_Scroll);
+            // 
+            // musicSize
+            // 
+            this.musicSize.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.musicSize.Location = new System.Drawing.Point(441, 198);
+            this.musicSize.Name = "musicSize";
+            this.musicSize.Size = new System.Drawing.Size(37, 30);
+            this.musicSize.TabIndex = 12;
+            this.musicSize.Text = "音量";
+            this.musicSize.UseVisualStyleBackColor = true;
+            // 
             // pictureBox
             // 
             this.pictureBox.BackColor = System.Drawing.Color.Transparent;
@@ -202,7 +230,7 @@ namespace 下尾葉月_インターン課題_20250507
             // 
             // volumeBar
             // 
-            this.volumeBar.Location = new System.Drawing.Point(469, 212);
+            this.volumeBar.Location = new System.Drawing.Point(484, 197);
             this.volumeBar.Maximum = 100;
             this.volumeBar.Name = "volumeBar";
             this.volumeBar.Size = new System.Drawing.Size(134, 45);
@@ -212,7 +240,7 @@ namespace 下尾葉月_インターン課題_20250507
             // 
             // previousMusicButton
             // 
-            this.previousMusicButton.Location = new System.Drawing.Point(248, 193);
+            this.previousMusicButton.Location = new System.Drawing.Point(223, 193);
             this.previousMusicButton.Name = "previousMusicButton";
             this.previousMusicButton.Size = new System.Drawing.Size(64, 64);
             this.previousMusicButton.TabIndex = 9;
@@ -222,7 +250,7 @@ namespace 下尾葉月_インターン課題_20250507
             // 
             // nextMusicButton
             // 
-            this.nextMusicButton.Location = new System.Drawing.Point(388, 193);
+            this.nextMusicButton.Location = new System.Drawing.Point(369, 193);
             this.nextMusicButton.Margin = new System.Windows.Forms.Padding(5);
             this.nextMusicButton.Name = "nextMusicButton";
             this.nextMusicButton.Size = new System.Drawing.Size(64, 64);
@@ -274,6 +302,15 @@ namespace 下尾葉月_インターン課題_20250507
             this.PlaybackTimeLabel.TabIndex = 10;
             this.PlaybackTimeLabel.Text = "--:--";
             // 
+            // pitchLabel
+            // 
+            this.pitchLabel.AutoSize = true;
+            this.pitchLabel.Location = new System.Drawing.Point(142, 230);
+            this.pitchLabel.Name = "pitchLabel";
+            this.pitchLabel.Size = new System.Drawing.Size(35, 12);
+            this.pitchLabel.TabIndex = 14;
+            this.pitchLabel.Text = "pitch : 1.0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -290,6 +327,7 @@ namespace 下尾葉月_インターン課題_20250507
             this.Load += new System.EventHandler(this.Form1_Load);
             this.File.ResumeLayout(false);
             this.File.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pitchSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
             this.playbackTime.ResumeLayout(false);
@@ -323,6 +361,9 @@ namespace 下尾葉月_インターン課題_20250507
         private System.Windows.Forms.Label playerAudioName;
         private System.Windows.Forms.TrackBar volumeBar;
         private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.Button musicSize;
+        private System.Windows.Forms.TrackBar pitchSlider;
+        private System.Windows.Forms.Label pitchLabel;
     }
 }
 
