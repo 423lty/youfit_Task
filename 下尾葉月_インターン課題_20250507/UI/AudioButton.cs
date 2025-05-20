@@ -20,29 +20,11 @@ namespace 下尾葉月_インターン課題_20250507
         /// </summary>
         public void InitButtonIcon()
         {
-            //リピート
-            repeat.Image = SettingButtonIcon(repeat, defaultButtonIconImage);
-
-            //次
-            nextMusicButton.Image = SettingButtonIcon(nextMusicButton, nextMusicButtonIconImage);
-
-            //前
-            previousMusicButton.Image = SettingButtonIcon(previousMusicButton, previousMusicButtonIconImage);
-
-            //削除ボタン
-            deleteButton.Image = SettingButtonIcon(deleteButton, trashBoxButtonIconImage);
-
-            //初期のアイコンの設定
-            UpdatePlayButtonIcon();
-
-            musicSize.Image = SettingButtonIcon(musicSize, musicVoiceSizeIconImage);
-
+            //ボタンの画像設定
+            SetButtonImage();
+         
             //ボタンを丸くする
-            ButtonRound(repeat);
-            ButtonRound(nextMusicButton);
-            ButtonRound(previousMusicButton);
-            ButtonRound(playBack);
-
+            ButtonRounding();
         }
 
         /// <summary>
@@ -115,6 +97,31 @@ namespace 下尾葉月_インターン課題_20250507
         }
 
         /// <summary>
+        /// ボタンの画像設定
+        /// </summary>
+        void SetButtonImage()
+        {
+            //リピート
+            repeat.Image = SettingButtonIcon(repeat, defaultButtonIconImage);
+
+            //次
+            nextMusicButton.Image = SettingButtonIcon(nextMusicButton, nextMusicButtonIconImage);
+
+            //前
+            previousMusicButton.Image = SettingButtonIcon(previousMusicButton, previousMusicButtonIconImage);
+
+            //削除ボタン
+            deleteButton.Image = SettingButtonIcon(deleteButton, trashBoxButtonIconImage);
+
+            //初期のアイコンの設定
+            UpdatePlayButtonIcon();
+
+            //音量の画像
+            musicSize.Image = SettingButtonIcon(musicSize, musicVoiceSizeIconImage);
+
+        }
+
+        /// <summary>
         /// iconの設定
         /// </summary>
         /// <param name="button">設定するiconボタン</param>
@@ -145,6 +152,17 @@ namespace 下尾葉月_インターン課題_20250507
         }
 
         /// <summary>
+        /// ボタンの丸め処理一覧
+        /// </summary>
+        void ButtonRounding()
+        {
+            ButtonRound(repeat);
+            ButtonRound(nextMusicButton);
+            ButtonRound(previousMusicButton);
+            ButtonRound(playBack);
+        }
+
+        /// <summary>
         /// ボタンを丸くする
         /// </summary>
         /// <param name="button"></param>
@@ -171,6 +189,31 @@ namespace 下尾葉月_インターン課題_20250507
             button.FlatAppearance.BorderSize = 0;
         }
 
+        /// <summary>
+        /// シングルクリック
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click(object sender, EventArgs e)
+        {
+            //クリックフラグを初期化
+            isDoubleClick = false;
+
+            //次のクリックの取得
+            clickTimer.Start();
+        }
+
+        /// <summary>
+        /// ダブルクリックの確認
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_DoubleClick(object sender, EventArgs e)
+        {
+            isDoubleClick = true;
+            clickTimer.Stop();
+            MessageBox.Show("ダブルクリックされました");
+        }
 
         //リピートしない場合のアイコン
         readonly Bitmap defaultButtonIconImage = Properties.Resources._default;
