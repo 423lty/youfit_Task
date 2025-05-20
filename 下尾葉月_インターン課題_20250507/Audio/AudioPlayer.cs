@@ -201,19 +201,6 @@ namespace 下尾葉月_インターン課題_20250507
         }
 
         /// <summary>
-        /// ボリュームのアタッチ
-        /// </summary>
-        /// <param name="volume"></param>
-        void AttachVolume(float volume)
-        {
-            //音量の制限
-            this.volume = Math.Max(MinVolume, Math.Min(MaxVolume * VolumeTrance, volume));
-            volumeBar.Value = (int)this.volume;
-            if (wavePlayer != null)
-                wavePlayer.Volume = this.volume / VolumeTrance;
-        }
-
-        /// <summary>
         /// 音楽の再生時の強調や選択
         /// </summary>
         /// <param name="item">選択したListViewItem</param>
@@ -310,6 +297,9 @@ namespace 下尾葉月_インターン課題_20250507
 
             //音楽ファイルを初期化で設定
             wavePlayer.Init(waveProvider);
+
+            //ピッチの調節
+            AttachPitch(pitch);
         }
 
         //再生player
@@ -330,29 +320,14 @@ namespace 下尾葉月_インターン課題_20250507
         //最初の音楽インデックス
         const int StartMusicIndex = 0;
 
-        //デフォルトのボリューム
-        const int DefaultVolume = 40;
-
-        //0.0～1.0に変換
-        const float VolumeTrance = 100f;
-
         //音量
         float volume;
-
-        //最大の音量
-        const float MaxVolume = 1.0f;
-
-        //最低の音量
-        const float MinVolume = 0.0f;
 
         //再生中の音楽ファイル目印
         readonly Bitmap playingItemImage = Properties.Resources._this;
 
         //point座標をずらす量
         const int PointCorrectX = 30;
-
-        //デフォルトのピッチ
-        const float DefaultPitch = 1f;
 
         //今のピッチ
         float pitch;

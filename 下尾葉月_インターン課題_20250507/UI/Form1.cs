@@ -28,7 +28,10 @@ namespace 下尾葉月_インターン課題_20250507
             InitButtonIcon();
 
             //ピッチの初期化
-            InitPitch();
+            AttachPitch(DefaultPitch);
+
+            //ダブルクリックの有効か
+            SetStyle(ControlStyles.StandardDoubleClick, true);
         }
 
         /// <summary>
@@ -40,6 +43,9 @@ namespace 下尾葉月_インターン課題_20250507
         {
             //前回の履歴の読み込み
             LoadFile(sender, e);
+
+            //クリックイベントの初期化
+            LoadClickHandle();
         }
 
         /// <summary>
@@ -53,52 +59,14 @@ namespace 下尾葉月_インターン課題_20250507
             SaveFile(sender, e);
         }
 
-        /// <summary>
-        /// List<string>をListViewItemに変換して変換
-        /// </summary>
-        /// <param name="items">ListViewItemに格納するList<string>配列</param>
-        /// <returns></returns>
-        ListViewItem GetListViewItem(List<string> items)
+        private void Button_DoubleClick(object sender, EventArgs e)
         {
-            //ListViewItemをnewする
-            ListViewItem listViewItem = new ListViewItem(items[FileNameIndex]);
 
-            //残りの要素を追加
-            for (int i = DateNameIndex; i < items.Count; i++)
-                listViewItem.SubItems.Add(items[i]);
-
-            //格納したListViewItemの返却
-            return listViewItem;
         }
 
-        /// <summary>
-        /// ProgressBarの更新処理
-        /// </summary>
-        void UpdateProgressBar()
+        private void Button_Click(object sender, EventArgs e)
         {
-            //再生されている場合
-            if (allMusicPlaybackTime.TotalMilliseconds > 0)
-            {
-                //totalsecondの誤差対策
-                AudioProgressBar.Value = Math.Min((int)currentMusicPlaybackTime.TotalSeconds, AudioProgressBar.Maximum);
 
-                //ラベルの更新
-                PlaybackTimeLabel.Text = $"{ObtainPlaybackTime(currentMusicPlaybackTime)}/{ObtainPlaybackTime(allMusicPlaybackTime)}";
-            }
         }
-
-        /// <summary>
-        /// ピッチの調節
-        /// </summary>
-        void InitPitch()
-        {
-            //ピッチの調節
-            pitch = DefaultPitch;
-
-            //スライダーの値を初期化
-            pitchSlider.Value = (int)(pitch * PitchCorrect);
-        }
-
-
     }
 }

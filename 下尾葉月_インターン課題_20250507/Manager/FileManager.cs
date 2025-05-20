@@ -292,6 +292,24 @@ namespace 下尾葉月_インターン課題_20250507
                 Directory.Delete(dirPath);
         }
 
+        /// <summary>
+        /// List<string>をListViewItemに変換して変換
+        /// </summary>
+        /// <param name="items">ListViewItemに格納するList<string>配列</param>
+        /// <returns></returns>
+        ListViewItem GetListViewItem(List<string> items)
+        {
+            //ListViewItemをnewする
+            ListViewItem listViewItem = new ListViewItem(items[FileNameIndex]);
+
+            //残りの要素を追加
+            for (int i = DateNameIndex; i < items.Count; i++)
+                listViewItem.SubItems.Add(items[i]);
+
+            //格納したListViewItemの返却
+            return listViewItem;
+        }
+
         //ローカルディスクへのパス
         const Environment.SpecialFolder localFilePath = Environment.SpecialFolder.MyDocuments;
 

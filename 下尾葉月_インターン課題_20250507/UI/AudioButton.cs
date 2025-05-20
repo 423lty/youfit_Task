@@ -15,6 +15,8 @@ namespace 下尾葉月_インターン課題_20250507
     /// </summary>
     public partial class Form1
     {
+
+
         /// <summary>
         /// iconの初期化
         /// </summary>
@@ -113,12 +115,14 @@ namespace 下尾葉月_インターン課題_20250507
             //削除ボタン
             deleteButton.Image = SettingButtonIcon(deleteButton, trashBoxButtonIconImage);
 
+            //削除ボタン
+            doubleClickablePitchButton.Image = SettingButtonIcon(doubleClickablePitchButton, PitchIconImage);
+
             //初期のアイコンの設定
             UpdatePlayButtonIcon();
 
             //音量の画像
-            musicSize.Image = SettingButtonIcon(musicSize, musicVoiceSizeIconImage);
-
+            UpdateMusicSizeButtonIcon(volume);
         }
 
         /// <summary>
@@ -149,6 +153,19 @@ namespace 下尾葉月_インターン課題_20250507
             else
                 playBack.Image = SettingButtonIcon(playBack, stopMusicButtonIconImage);
 
+        }
+
+        /// <summary>
+        /// 現在の音量に応じた音量のアイコン切り替え
+        /// </summary>
+        /// <param name="volume">現在の音量</param>
+        void UpdateMusicSizeButtonIcon(float volume)
+        {
+            //音量がない場合
+            if(volume <= volumeBar.Minimum)
+                doubleClickableMusicSizeButton.Image=SettingButtonIcon(doubleClickableMusicSizeButton,musicVoiceMuteIconImage);
+            else
+                doubleClickableMusicSizeButton.Image = SettingButtonIcon(doubleClickableMusicSizeButton, musicVoiceSizeIconImage);
         }
 
         /// <summary>
@@ -189,32 +206,6 @@ namespace 下尾葉月_インターン課題_20250507
             button.FlatAppearance.BorderSize = 0;
         }
 
-        /// <summary>
-        /// シングルクリック
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_Click(object sender, EventArgs e)
-        {
-            //クリックフラグを初期化
-            isDoubleClick = false;
-
-            //次のクリックの取得
-            clickTimer.Start();
-        }
-
-        /// <summary>
-        /// ダブルクリックの確認
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_DoubleClick(object sender, EventArgs e)
-        {
-            isDoubleClick = true;
-            clickTimer.Stop();
-            MessageBox.Show("ダブルクリックされました");
-        }
-
         //リピートしない場合のアイコン
         readonly Bitmap defaultButtonIconImage = Properties.Resources._default;
 
@@ -239,10 +230,17 @@ namespace 下尾葉月_インターン課題_20250507
         //音楽の音量アイコン
         readonly Bitmap musicVoiceSizeIconImage = Properties.Resources.musicSize;
 
+        //音量なしミュートアイコン
+        readonly Bitmap musicVoiceMuteIconImage = Properties.Resources.mute;
+
+        //音程
+        readonly Bitmap PitchIconImage = Properties.Resources.pitch;
+
         //ボタンの中心
         const int BtnCenter = 0;
 
         //ボタンのサイズの調節
         const int ButtonImageCorrect = 5;
+
     }
 }

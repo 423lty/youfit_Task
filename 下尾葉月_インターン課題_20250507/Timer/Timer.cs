@@ -61,16 +61,9 @@ namespace 下尾葉月_インターン課題_20250507
             }
         }
 
+        //ダブルクリックするのに必要な時間
+        readonly int DoubleClickThreshold = SystemInformation.DoubleClickTime;
 
-        private void clickTimer_Tick(object sender, EventArgs e)
-        {
-            clickTimer.Stop();
-            if (isDoubleClick)
-                MessageBox.Show("シングル");
-        }
-
-        //ダブルクリックの確認
-        bool isDoubleClick = false;
 
     }
 }

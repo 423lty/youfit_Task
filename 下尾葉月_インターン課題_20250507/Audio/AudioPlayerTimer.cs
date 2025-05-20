@@ -66,6 +66,22 @@ namespace 下尾葉月_インターン課題_20250507
             return time.ToString(LessHours);
         }
 
+        /// <summary>
+        /// ProgressBarの更新処理
+        /// </summary>
+        void UpdateProgressBar()
+        {
+            //再生されている場合
+            if (allMusicPlaybackTime.TotalMilliseconds > 0)
+            {
+                //totalsecondの誤差対策
+                AudioProgressBar.Value = Math.Min((int)currentMusicPlaybackTime.TotalSeconds, AudioProgressBar.Maximum);
+
+                //ラベルの更新
+                PlaybackTimeLabel.Text = $"{ObtainPlaybackTime(currentMusicPlaybackTime)}/{ObtainPlaybackTime(allMusicPlaybackTime)}";
+            }
+        }
+
         //設定する時間の変換型(1時間以上)
         readonly string MoreHours = @"hh\:mm\:ss";
 
