@@ -15,8 +15,8 @@ namespace 下尾葉月_インターン課題_20250507
         void AttachPitch(float pitch)
         {
             // スライダーの値（5〜20）をピッチ係数（0.5〜2.0）に変換
-            //this.pitch = Math.Max(MinPitch, Math.Min(MaxPitch, pitch));
-            this.pitch = pitch;
+            this.pitch = Math.Max(MinPitch, Math.Min(MaxPitch, pitch));
+            //this.pitch = pitch;
             pitchSlider.Value = (int)this.pitch;
 
             //pitchProviderがnull以外

@@ -45,7 +45,7 @@ namespace 下尾葉月_インターン課題_20250507
 
             //リピートしない場合
             if (repeat.Image != null && !isRepeatMusic)
-                repeat.Image = new Bitmap(Properties.Resources._default, repeat.Width, repeat.Height);
+                repeat.Image = SettingButtonIcon(repeat, defaultButtonIconImage);
         }
 
         /// <summary>
@@ -134,8 +134,8 @@ namespace 下尾葉月_インターン課題_20250507
         public Bitmap SettingButtonIcon(Button button, Bitmap icon)
         {
             //buttonの要素がnullまたは空ではない場合空にする
-            if (!String.IsNullOrEmpty(button.Text))
-                button.Text = String.Empty;
+            if (!string.IsNullOrEmpty(button.Text))
+                button.Text = string.Empty;
 
             //リピート画像のリサイズ
             return new Bitmap(icon, button.Width - ButtonImageCorrect, button.Height - ButtonImageCorrect);

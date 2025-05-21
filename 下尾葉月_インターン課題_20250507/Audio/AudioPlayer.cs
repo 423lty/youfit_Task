@@ -321,7 +321,7 @@ namespace 下尾葉月_インターン課題_20250507
         const int StartMusicIndex = 0;
 
         //音量
-        float volume;
+        float volume = DefaultVolume;
 
         //再生中の音楽ファイル目印
         readonly Bitmap playingItemImage = Properties.Resources._this;
@@ -330,6 +330,6 @@ namespace 下尾葉月_インターン課題_20250507
         const int PointCorrectX = 30;
 
         //今のピッチ
-        float pitch;
+        float pitch = DefaultPitch;
     }
 }

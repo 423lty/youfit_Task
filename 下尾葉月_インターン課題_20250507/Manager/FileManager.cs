@@ -25,10 +25,10 @@ namespace 下尾葉月_インターン課題_20250507
             try
             {
                 //データファイルを取得
-                string dataFilePath = Path.Combine(saveDataDir, dataName);
+                string dataFilePath = Path.Combine(saveDataDir, DataName);
 
                 //データファイルを取得
-                string volumePath = Path.Combine(saveSoundDir, volumeName);
+                string volumePath = Path.Combine(saveSoundDir, VolumePitchTextName);
 
                 //データファイルが存在する場合のみ実行
                 if (System.IO.File.Exists(dataFilePath))
@@ -74,17 +74,23 @@ namespace 下尾葉月_インターン課題_20250507
                 //ボリュームファイルが存在する場合
                 if (System.IO.File.Exists(volumePath))
                 {
-                    //ボリュームを取得
-                    string volumeString = System.IO.File.ReadAllText(volumePath, Encoding.UTF8);
+                    //ボリュームとピッチを取得
+                    string[] volumePitchAllTextData = System.IO.File.ReadAllLines(volumePath, Encoding.UTF8);
 
-                    //変換    
-                    if (float.TryParse(volumeString, NumberStyles.Float, CultureInfo.InvariantCulture, out float saveVolume))
-                        AttachVolume(saveVolume);
-                    else
-                        AttachVolume(DefaultVolume);
+                    //配列ないかつボリュームのテキストデータが存在している場合|float に変換した場合Defaultの値を代入
+                    if (volumePitchAllTextData.Length > VolumeTextIndex)
+                        if (!float.TryParse(volumePitchAllTextData[VolumeTextIndex], NumberStyles.Float, CultureInfo.InvariantCulture, out volume))
+                            volume = DefaultVolume;
+                    //配列ないかつピッチのテキストデータが存在している場合|float に変換した場合Defaultの値を代入
+                    if (volumePitchAllTextData.Length > PitchTextIndex)
+                        if (!float.TryParse(volumePitchAllTextData[PitchTextIndex], NumberStyles.Float, CultureInfo.InvariantCulture, out pitch))
+                            pitch = DefaultVolume;
                 }
-                else
-                    AttachVolume(DefaultVolume);
+
+                //それぞれの音量設定
+                AttachVolume(volume);
+                AttachPitch(pitch);
+
             }
             catch (Exception ex)
             {
@@ -120,7 +126,7 @@ namespace 下尾葉月_インターン課題_20250507
                     Directory.CreateDirectory(saveDataDir);
 
                     //データを保存するファイルのパスを取得
-                    string fileDataPath = Path.Combine(saveDataDir, dataName);
+                    string fileDataPath = Path.Combine(saveDataDir, DataName);
 
                     //関連するデータを連結
                     List<string> content = new List<string>();
@@ -184,14 +190,6 @@ namespace 下尾葉月_インターン課題_20250507
                             MessageBox.Show(ex.Message);
                         }
                     }
-
-                    //音量の保存位置の取得
-                    string volumeString = (volume).ToString(CultureInfo.InvariantCulture);
-                    string volumeDataPath = Path.Combine(saveSoundDir, volumeName);
-
-                    //文字列型にして保存
-                    System.IO.File.WriteAllText(volumeDataPath, volumeString, Encoding.UTF8);
-
                 }
                 //一つも保存するデータが存在しない場合
                 else
@@ -199,7 +197,7 @@ namespace 下尾葉月_インターン課題_20250507
                     if (Directory.Exists(saveDataDir) && Directory.Exists(saveSoundDir))
                     {
                         //保存データファイルを検索
-                        string fileDataPath = Path.Combine(saveDataDir, dataName);
+                        string fileDataPath = Path.Combine(saveDataDir, DataName);
 
                         //音楽ファイルのそれぞれのデータを削除する
                         if (Directory.Exists(saveSoundDir))
@@ -220,6 +218,19 @@ namespace 下尾葉月_インターン課題_20250507
                             Directory.Delete(saveDataDir);
                     }
                 }
+
+                //テキストファイルに保存するデータを格納するList
+                List<string> volumePitchContent = new List<string>() {
+                    volume.ToString(CultureInfo.InvariantCulture),
+                    pitch.ToString(CultureInfo.InvariantCulture),
+                };
+
+                //音量の保存位置の取得
+                string volumePitchDataPath = Path.Combine(saveSoundDir, VolumePitchTextName);
+
+                //文字列型にして保存
+                System.IO.File.WriteAllLines(volumePitchDataPath, volumePitchContent, Encoding.UTF8);
+
             }
             catch (Exception ex)
             {
@@ -314,28 +325,34 @@ namespace 下尾葉月_インターン課題_20250507
         const Environment.SpecialFolder localFilePath = Environment.SpecialFolder.MyDocuments;
 
         //作成または参照するファイル名
-        const string saveFileName = "VoiShredder";
+        const string SaveFileName = "VoiShredder";
 
         //作成して保存するファイル名
-        const string dataName = "Data.txt";
+        const string DataName = "Data.txt";
 
         //読み込むデータファイル名
         const string LoadFileName = "LoadFile";
 
         //読み込むサウンドファイル名
-        const string soundFileName = "soundFile";
+        const string SoundFileName = "soundFile";
 
         //ボリュームのテキストファイル名
-        const string volumeName = "volumeFile.txt";
+        const string VolumePitchTextName = "volumePitchFile.txt";
 
         //保存するデータファイルパス
-        readonly string saveDataDir = Path.Combine(Environment.GetFolderPath(localFilePath), saveFileName, LoadFileName);
+        readonly string saveDataDir = Path.Combine(Environment.GetFolderPath(localFilePath), SaveFileName, LoadFileName);
 
         //保存する音楽ファイルパス
-        readonly string saveSoundDir = Path.Combine(Environment.GetFolderPath(localFilePath), saveFileName, soundFileName);
+        readonly string saveSoundDir = Path.Combine(Environment.GetFolderPath(localFilePath), SaveFileName, SoundFileName);
 
         //保存するときの格納指定子
         const string StorageDesignator = ",";
+
+        //ボリュームのテキストファイルのインデックス番号
+        const int VolumeTextIndex = 0;
+
+        //ピッチのテキストファイルのインデックス番号
+        const int PitchTextIndex = 1;
 
         //ディレクトリに存在しないファイルの内部個数
         const int NoFileDirectory = 0;

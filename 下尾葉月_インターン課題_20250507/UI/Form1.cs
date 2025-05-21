@@ -27,9 +27,6 @@ namespace 下尾葉月_インターン課題_20250507
             //アイコンの初期化
             InitButtonIcon();
 
-            //ピッチの初期化
-            AttachPitch(DefaultPitch);
-
             //ダブルクリックの有効か
             SetStyle(ControlStyles.StandardDoubleClick, true);
         }
@@ -57,16 +54,6 @@ namespace 下尾葉月_インターン課題_20250507
         {
             //ファイルの保存
             SaveFile(sender, e);
-        }
-
-        private void Button_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
