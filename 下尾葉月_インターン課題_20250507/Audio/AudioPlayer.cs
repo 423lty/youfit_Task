@@ -90,8 +90,6 @@ namespace 下尾葉月_インターン課題_20250507
                     //音楽のリストから選択した名前を適応
                     playerAudioName.Text = musicName;
 
-                    UpdateNowPlayingMarker();
-
                     //総再生時間を取得
                     allMusicPlaybackTime = GetMusicAllTime(fullPath);
 
@@ -122,17 +120,23 @@ namespace 下尾葉月_インターン課題_20250507
 
             //音楽の再生を停止する
             wavePlayer.Pause();
+
+            //止めたとき矢印を非表示
+            pictureBox.Visible = false;
+
         }
 
         /// <summary>
         /// 再生の終了
         /// </summary>
-        void EndPlayBack()
+        async void EndPlayBack()
         {
             //nullじゃないかつ再生している場合
-            if (wavePlayer != null && wavePlayer.PlaybackState == PlaybackState.Playing)
+            if (wavePlayer != null && wavePlayer.PlaybackState == PlaybackState.Playing || wavePlayer.PlaybackState == PlaybackState.Stopped)
             {
+
                 wavePlayer.Stop();
+                await Task.Delay(500);
                 wavePlayer.Dispose();
                 wavePlayer = null;
             }

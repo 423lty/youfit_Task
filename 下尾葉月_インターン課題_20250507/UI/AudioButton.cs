@@ -15,8 +15,6 @@ namespace 下尾葉月_インターン課題_20250507
     /// </summary>
     public partial class Form1
     {
-
-
         /// <summary>
         /// iconの初期化
         /// </summary>
@@ -116,7 +114,7 @@ namespace 下尾葉月_インターン課題_20250507
             deleteButton.Image = SettingButtonIcon(deleteButton, trashBoxButtonIconImage);
 
             //削除ボタン
-            doubleClickablePitchButton.Image = SettingButtonIcon(doubleClickablePitchButton, PitchIconImage);
+            ClickablePitchButton.Text = null;
 
             //初期のアイコンの設定
             UpdatePlayButtonIcon();
@@ -133,6 +131,8 @@ namespace 下尾葉月_インターン課題_20250507
         /// <returns>buttonにフィットしたサイズの画像のへ客</returns>
         public Bitmap SettingButtonIcon(Button button, Bitmap icon)
         {
+
+            button.Image = null;
             //buttonの要素がnullまたは空ではない場合空にする
             if (!string.IsNullOrEmpty(button.Text))
                 button.Text = string.Empty;
@@ -161,11 +161,15 @@ namespace 下尾葉月_インターン課題_20250507
         /// <param name="volume">現在の音量</param>
         void UpdateMusicSizeButtonIcon(float volume)
         {
-            //音量がない場合
-            if(volume <= volumeBar.Minimum)
-                doubleClickableMusicSizeButton.Image=SettingButtonIcon(doubleClickableMusicSizeButton,musicVoiceMuteIconImage);
-            else
-                doubleClickableMusicSizeButton.Image = SettingButtonIcon(doubleClickableMusicSizeButton, musicVoiceSizeIconImage);
+            //線を引く
+            ClickableMusicSizeButton.DrawCenterLine = true;
+
+            //画像を削除
+            ClickableMusicSizeButton.Image = null;
+
+            //テキストの追加
+            ClickableMusicSizeButton.Text = null;
+
         }
 
         /// <summary>

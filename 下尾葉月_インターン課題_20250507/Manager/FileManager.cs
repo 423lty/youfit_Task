@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -107,17 +108,7 @@ namespace 下尾葉月_インターン課題_20250507
             try
             {
                 //再生されていたりする場合の対処
-                if (wavePlayer.PlaybackState == PlaybackState.Playing || wavePlayer.PlaybackState == PlaybackState.Stopped)
-                {
-                    wavePlayer.Stop();
-                    wavePlayer.Dispose();
-                    wavePlayer = null;
-                }
-                if (audio != null)
-                {
-                    audio.Dispose();
-                    audio = null;
-                }
+                EndPlayBack();
 
                 //musicList内にオブジェクトが存在している場合
                 if (musicList.Items.Count > 0)
@@ -192,32 +183,39 @@ namespace 下尾葉月_インターン課題_20250507
                     }
                 }
                 //一つも保存するデータが存在しない場合
-                else
-                {
-                    if (Directory.Exists(saveDataDir) && Directory.Exists(saveSoundDir))
-                    {
-                        //保存データファイルを検索
-                        string fileDataPath = Path.Combine(saveDataDir, DataName);
+                //else
+                //{
+                //    if (Directory.Exists(saveDataDir) && Directory.Exists(saveSoundDir))
+                //    {
+                //        //保存データファイルを検索
+                //        string fileDataPath = Path.Combine(saveDataDir, DataName);
 
-                        //音楽ファイルのそれぞれのデータを削除する
-                        if (Directory.Exists(saveSoundDir))
-                        {
-                            //ディレクトリないに存在する音声ファイルを一つずつ取り出して削除
-                            foreach (string file in Directory.GetFiles(saveSoundDir))
-                                System.IO.File.Delete(file);
+                //        //
+                //        string leftTextFile = Path.Combine(saveDataDir, VolumePitchTextName);
 
-                            //ディレクトリないにファイルが存在しない場合ファイルを削除
-                            DeleteDirectory(saveSoundDir);
-                        }
+                //        //音楽ファイルのそれぞれのデータを削除する
+                //        if (Directory.Exists(saveSoundDir))
+                //        {
+                //            //ディレクトリないに存在する音声ファイルを一つずつ取り出して削除
+                //            foreach (string file in Directory.GetFiles(saveSoundDir))
+                //                System.IO.File.Delete(file);
 
-                        if (System.IO.File.Exists(fileDataPath))
-                            System.IO.File.Delete(fileDataPath);
+                //            //ディレクトリないにファイルが存在しない場合ファイルを削除
+                //            //DeleteDirectory(saveSoundDir);
+                //        }
 
-                        //保存するテキストファイルが存在しない場合削除する
-                        if (Directory.Exists(saveDataDir))
-                            Directory.Delete(saveDataDir);
-                    }
-                }
+                //        if (System.IO.File.Exists(fileDataPath) && !fileDataPath.Equals(leftTextFile, StringComparison.OrdinalIgnoreCase))
+                //            System.IO.File.Delete(fileDataPath);
+
+                //        //保存するテキストファイルが存在しない場合削除する
+                //        if (Directory.Exists(saveDataDir))
+                //        {
+                //            string[] remainingFiles = Directory.GetFiles(saveDataDir);
+                //            if (!remainingFiles.Any(f => !f.Equals(leftTextFile, StringComparison.OrdinalIgnoreCase)))
+                //                Directory.Delete(saveDataDir);
+                //        }
+                //    }
+                //}
 
                 //テキストファイルに保存するデータを格納するList
                 List<string> volumePitchContent = new List<string>() {
@@ -375,8 +373,6 @@ namespace 下尾葉月_インターン課題_20250507
         //ファイルのパスを記憶する変数
         Dictionary<string, string> fullPathDirectory = new Dictionary<string, string>();
 
-        //1MB
-        const int B = 1024;
 
         //Filterで使用するテキストデータ
         const string FilterText = "*.mp3ファイル(*.mp3) *.wavファイル(*.wav)|*.mp3;*wav";

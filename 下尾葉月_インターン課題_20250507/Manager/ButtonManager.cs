@@ -16,18 +16,18 @@ namespace 下尾葉月_インターン課題_20250507
         void LoadClickHandle()
         {
             //それぞれの初期化
-            musicSizeClickHandler = new ClickHandler(SystemInformation.DoubleClickTime, MusicSizeButton_SingleClick, MusicSizeButton_DoubleClick, clickTimer);
-            pitchClickHandler = new ClickHandler(SystemInformation.DoubleClickTime, PitchButton_SingleClick, PitchButton_DoubleClick, clickTimer);
+            musicSizeClickHandler = new ClickHandler(ClickableMusicSizeButton, MusicSizeButton_LeftClick, MusicSizeButton_RightClick);
+            pitchClickHandler = new ClickHandler(ClickablePitchButton, PitchButton_LeftClick, PitchButton_RightClick);
 
             //それぞれのクリックイベントの割り当て
-            doubleClickableMusicSizeButton.Click += musicSizeClickHandler.OnButton_Click;
-            doubleClickablePitchButton.Click += pitchClickHandler.OnButton_Click;
+            ClickableMusicSizeButton.MouseClick += musicSizeClickHandler.OnButton_MouseClick;
+            ClickablePitchButton.MouseClick += pitchClickHandler.OnButton_MouseClick;
         }
 
         /// <summary>
-        /// シングルクリック処理
+        /// ないナス
         /// </summary>
-        void MusicSizeButton_SingleClick()
+        void MusicSizeButton_LeftClick()
         {
             //音量の調節
             AttachVolume(volume - MusicSizefluctuation);
@@ -38,7 +38,7 @@ namespace 下尾葉月_インターン課題_20250507
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void MusicSizeButton_DoubleClick()
+        void MusicSizeButton_RightClick()
         {
             //音量の調節
             AttachVolume(volume + MusicSizefluctuation);
@@ -46,7 +46,7 @@ namespace 下尾葉月_インターン課題_20250507
         /// <summary>
         /// シングルクリック処理
         /// </summary>
-        void PitchButton_SingleClick()
+        void PitchButton_LeftClick()
         {
             //音量の調節
             AttachPitch(pitch - Pitchfluctuation);
@@ -55,7 +55,7 @@ namespace 下尾葉月_インターン課題_20250507
         /// <summary>
         /// ダブルクリックの確認
         /// </summary>
-        void PitchButton_DoubleClick()
+        void PitchButton_RightClick()
         {
             //音量の調節
             AttachPitch(pitch + Pitchfluctuation);

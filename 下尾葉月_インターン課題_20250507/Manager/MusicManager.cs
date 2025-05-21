@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,25 +34,33 @@ namespace 下尾葉月_インターン課題_20250507
                 MessageBox.Show("削除する音楽ファイルを選択してください");
                 return;
             }
-
-            DialogResult result = MessageBox.Show(
+            else if (wavePlayer.PlaybackState == PlaybackState.Playing)
+            {
+                MessageBox.Show("再生中は削除できません");
+                return;
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show(
                 "本当に削除しますか？",
                 "リスト削除",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Exclamation
                 );
 
-            if (result == DialogResult.Yes)
-            {
-                //指定した音楽ファイルを取得
-                ListViewItem listViewItem = musicList.SelectedItems[FileNameIndex];
+                if (result == DialogResult.Yes)
+                {
+                    //指定した音楽ファイルを取得
+                    ListViewItem listViewItem = musicList.SelectedItems[FileNameIndex];
 
-                //指定した音楽のインデックス番号を取得
-                int selectedIndex = musicList.Items.IndexOf(listViewItem);
+                    //指定した音楽のインデックス番号を取得
+                    int selectedIndex = musicList.Items.IndexOf(listViewItem);
 
-                //指定した要素を削除する
-                musicList.Items.RemoveAt(selectedIndex);
+                    //指定した要素を削除する
+                    musicList.Items.RemoveAt(selectedIndex);
+                }
             }
+            
         }
 
         /// <summary>
@@ -67,7 +76,7 @@ namespace 下尾葉月_インターン課題_20250507
             string fileName = fi.Name;
             string addDate = DateTime.Now.ToString(DateFormat);
             string fileType = fi.Extension.TrimStart(TrimChars);
-            string fileSize = (fi.Length / (B * B)).ToString("0.0") + "MB";
+            string fileSize = Math.Round(fi.Length / (B * B),1).ToString("F1") + "MB";
 
             //パスを追加
             fullPathDirectory[fileName] = file;
@@ -106,5 +115,7 @@ namespace 下尾葉月_インターン課題_20250507
         //取り出すキャラ型
         const char TrimChars = '.';
 
+        //1MB
+        const double B = 1024.0;
     }
 }
