@@ -15,6 +15,8 @@ namespace 下尾葉月_インターン課題_20250507
     /// </summary>
     public partial class Form1
     {
+
+
         /// <summary>
         /// iconの初期化
         /// </summary>
@@ -43,7 +45,7 @@ namespace 下尾葉月_インターン課題_20250507
 
             //リピートしない場合
             if (repeat.Image != null && !isRepeatMusic)
-                repeat.Image = SettingButtonIcon(repeat, defaultButtonIconImage);
+                repeat.Image = new Bitmap(Properties.Resources._default, repeat.Width, repeat.Height);
         }
 
         /// <summary>
@@ -114,7 +116,7 @@ namespace 下尾葉月_インターン課題_20250507
             deleteButton.Image = SettingButtonIcon(deleteButton, trashBoxButtonIconImage);
 
             //削除ボタン
-            ClickablePitchButton.Text = null;
+            doubleClickablePitchButton.Image = SettingButtonIcon(doubleClickablePitchButton, PitchIconImage);
 
             //初期のアイコンの設定
             UpdatePlayButtonIcon();
@@ -131,11 +133,9 @@ namespace 下尾葉月_インターン課題_20250507
         /// <returns>buttonにフィットしたサイズの画像のへ客</returns>
         public Bitmap SettingButtonIcon(Button button, Bitmap icon)
         {
-
-            button.Image = null;
             //buttonの要素がnullまたは空ではない場合空にする
-            if (!string.IsNullOrEmpty(button.Text))
-                button.Text = string.Empty;
+            if (!String.IsNullOrEmpty(button.Text))
+                button.Text = String.Empty;
 
             //リピート画像のリサイズ
             return new Bitmap(icon, button.Width - ButtonImageCorrect, button.Height - ButtonImageCorrect);
@@ -161,15 +161,11 @@ namespace 下尾葉月_インターン課題_20250507
         /// <param name="volume">現在の音量</param>
         void UpdateMusicSizeButtonIcon(float volume)
         {
-            //線を引く
-            ClickableMusicSizeButton.DrawCenterLine = true;
-
-            //画像を削除
-            ClickableMusicSizeButton.Image = null;
-
-            //テキストの追加
-            ClickableMusicSizeButton.Text = null;
-
+            //音量がない場合
+            if(volume <= volumeBar.Minimum)
+                doubleClickableMusicSizeButton.Image=SettingButtonIcon(doubleClickableMusicSizeButton,musicVoiceMuteIconImage);
+            else
+                doubleClickableMusicSizeButton.Image = SettingButtonIcon(doubleClickableMusicSizeButton, musicVoiceSizeIconImage);
         }
 
         /// <summary>

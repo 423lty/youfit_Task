@@ -26,9 +26,6 @@ namespace 下尾葉月_インターン課題_20250507
                 //再生時間からバーの更新をする
                 UpdateProgressBar();
 
-                if (wavePlayer.PlaybackState == PlaybackState.Playing)
-                    UpdateNowPlayingMarker();
-
                 //現在の再生時間が総再生時間に達した場合
                 if (wavePlayer.PlaybackState == PlaybackState.Stopped && wavePlayer != null)
                 {

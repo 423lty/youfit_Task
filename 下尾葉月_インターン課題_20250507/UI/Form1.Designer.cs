@@ -46,11 +46,11 @@ namespace 下尾葉月_インターン課題_20250507
             this.Size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.repeat = new System.Windows.Forms.Button();
             this.File = new System.Windows.Forms.GroupBox();
-            this.ClickablePitchButton = new 下尾葉月_インターン課題_20250507.UI.DoubleClickableButton("-","+");
-            this.ClickableMusicSizeButton = new 下尾葉月_インターン課題_20250507.UI.DoubleClickableButton("-", "+");
+            this.doubleClickablePitchButton = new 下尾葉月_インターン課題_20250507.UI.DoubleClickableButton();
             this.audioSizeLabel = new System.Windows.Forms.Label();
             this.pitchLabel = new System.Windows.Forms.Label();
             this.pitchSlider = new System.Windows.Forms.TrackBar();
+            this.doubleClickableMusicSizeButton = new 下尾葉月_インターン課題_20250507.UI.DoubleClickableButton();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.previousMusicButton = new System.Windows.Forms.Button();
@@ -95,7 +95,7 @@ namespace 下尾葉月_インターン課題_20250507
             // deleteButton
             // 
             this.deleteButton.Font = new System.Drawing.Font("ＭＳ 明朝", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.deleteButton.Location = new System.Drawing.Point(683, 83);
+            this.deleteButton.Location = new System.Drawing.Point(624, 82);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(64, 64);
             this.deleteButton.TabIndex = 2;
@@ -141,7 +141,7 @@ namespace 下尾葉月_インターン課題_20250507
             this.musicList.HideSelection = false;
             this.musicList.Location = new System.Drawing.Point(36, 27);
             this.musicList.Name = "musicList";
-            this.musicList.Size = new System.Drawing.Size(641, 158);
+            this.musicList.Size = new System.Drawing.Size(567, 158);
             this.musicList.TabIndex = 6;
             this.musicList.UseCompatibleStateImageBehavior = false;
             this.musicList.View = System.Windows.Forms.View.Details;
@@ -170,7 +170,7 @@ namespace 下尾葉月_インターン課題_20250507
             // repeat
             // 
             this.repeat.Font = new System.Drawing.Font("ＭＳ 明朝", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.repeat.Location = new System.Drawing.Point(683, 198);
+            this.repeat.Location = new System.Drawing.Point(642, 197);
             this.repeat.Name = "repeat";
             this.repeat.Size = new System.Drawing.Size(64, 64);
             this.repeat.TabIndex = 7;
@@ -179,11 +179,11 @@ namespace 下尾葉月_インターン課題_20250507
             // 
             // File
             // 
-            this.File.Controls.Add(this.ClickablePitchButton);
+            this.File.Controls.Add(this.doubleClickablePitchButton);
             this.File.Controls.Add(this.audioSizeLabel);
             this.File.Controls.Add(this.pitchLabel);
             this.File.Controls.Add(this.pitchSlider);
-            this.File.Controls.Add(this.ClickableMusicSizeButton);
+            this.File.Controls.Add(this.doubleClickableMusicSizeButton);
             this.File.Controls.Add(this.pictureBox);
             this.File.Controls.Add(this.volumeBar);
             this.File.Controls.Add(this.previousMusicButton);
@@ -197,28 +197,26 @@ namespace 下尾葉月_インターン課題_20250507
             this.File.Margin = new System.Windows.Forms.Padding(5);
             this.File.Name = "File";
             this.File.Padding = new System.Windows.Forms.Padding(2);
-            this.File.Size = new System.Drawing.Size(838, 267);
+            this.File.Size = new System.Drawing.Size(747, 267);
             this.File.TabIndex = 8;
             this.File.TabStop = false;
             this.File.Text = "選択ファイル";
             // 
-            // ClickablePitchButton
+            // doubleClickablePitchButton
             // 
-            this.ClickablePitchButton.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.ClickablePitchButton.Location = new System.Drawing.Point(36, 195);
-            this.ClickablePitchButton.Name = "ClickablePitchButton";
-            this.ClickablePitchButton.Size = new System.Drawing.Size(80, 60);
-            this.ClickablePitchButton.TabIndex = 16;
-            this.ClickablePitchButton.Text = "音域";
-            this.ClickablePitchButton.UseVisualStyleBackColor = true;
-            this.ClickablePitchButton.DrawCenterLine = true;
-
+            this.doubleClickablePitchButton.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.doubleClickablePitchButton.Location = new System.Drawing.Point(59, 197);
+            this.doubleClickablePitchButton.Name = "doubleClickablePitchButton";
+            this.doubleClickablePitchButton.Size = new System.Drawing.Size(48, 51);
+            this.doubleClickablePitchButton.TabIndex = 16;
+            this.doubleClickablePitchButton.Text = "音域";
+            this.doubleClickablePitchButton.UseVisualStyleBackColor = true;
             // 
             // audioSizeLabel
             // 
             this.audioSizeLabel.AutoSize = true;
             this.audioSizeLabel.Font = new System.Drawing.Font("ＭＳ 明朝", 10F);
-            this.audioSizeLabel.Location = new System.Drawing.Point(562, 234);
+            this.audioSizeLabel.Location = new System.Drawing.Point(501, 235);
             this.audioSizeLabel.Name = "audioSizeLabel";
             this.audioSizeLabel.Size = new System.Drawing.Size(91, 14);
             this.audioSizeLabel.TabIndex = 15;
@@ -245,15 +243,16 @@ namespace 下尾葉月_インターン課題_20250507
             this.pitchSlider.Value = 5;
             this.pitchSlider.Scroll += new System.EventHandler(this.pitchSlider_Scroll);
             // 
-            // ClickableMusicSizeButton
+            // doubleClickableMusicSizeButton
             // 
-            this.ClickableMusicSizeButton.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.ClickableMusicSizeButton.Location = new System.Drawing.Point(461, 197);
-            this.ClickableMusicSizeButton.Name = "ClickableMusicSizeButton";
-            this.ClickableMusicSizeButton.Size = new System.Drawing.Size(80, 60);
-            this.ClickableMusicSizeButton.TabIndex = 12;
-            this.ClickableMusicSizeButton.Text = "音量";
-            this.ClickableMusicSizeButton.UseVisualStyleBackColor = true;
+            this.doubleClickableMusicSizeButton.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.doubleClickableMusicSizeButton.Location = new System.Drawing.Point(441, 198);
+            this.doubleClickableMusicSizeButton.Name = "doubleClickableMusicSizeButton";
+            this.doubleClickableMusicSizeButton.Size = new System.Drawing.Size(48, 51);
+            this.doubleClickableMusicSizeButton.TabIndex = 12;
+            this.doubleClickableMusicSizeButton.Text = "音量";
+            this.doubleClickableMusicSizeButton.UseVisualStyleBackColor = true;
+            //this.doubleClickableMusicSizeButton.Click += new System.EventHandler(this.Button_Click);
             // 
             // pictureBox
             // 
@@ -269,7 +268,7 @@ namespace 下尾葉月_インターン課題_20250507
             // 
             // volumeBar
             // 
-            this.volumeBar.Location = new System.Drawing.Point(548, 198);
+            this.volumeBar.Location = new System.Drawing.Point(495, 198);
             this.volumeBar.Maximum = 100;
             this.volumeBar.Name = "volumeBar";
             this.volumeBar.Size = new System.Drawing.Size(119, 45);
@@ -349,7 +348,7 @@ namespace 下尾葉月_インターン課題_20250507
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(881, 555);
+            this.ClientSize = new System.Drawing.Size(771, 555);
             this.Controls.Add(this.playbackTime);
             this.Controls.Add(this.File);
             this.Controls.Add(this.dragDropBox);
@@ -396,11 +395,11 @@ namespace 下尾葉月_インターン課題_20250507
         private System.Windows.Forms.Label playerAudioName;
         private System.Windows.Forms.TrackBar volumeBar;
         private System.Windows.Forms.PictureBox pictureBox;
+        private DoubleClickableButton doubleClickableMusicSizeButton;
         private System.Windows.Forms.TrackBar pitchSlider;
         private System.Windows.Forms.Label pitchLabel;
         private Label audioSizeLabel;
-        private DoubleClickableButton ClickableMusicSizeButton;
-        private DoubleClickableButton ClickablePitchButton;
+        private DoubleClickableButton doubleClickablePitchButton;
     }
 }
 
